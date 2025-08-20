@@ -54,8 +54,17 @@ const EditQuestionSection: FC<EditQuestionSectionProps> = ({ question }) => {
   const isFormDataChanged = formMethods.formState.isDirty;
 
   const onSubmit = async (data: FieldValues) => {
-    if (data?.number?.length < 2) {
-      setFormError('Minimum 2 numbers required!');
+    // Check if operator requires multiple numbers
+    const requiresMultipleNumbers = data?.operator === '+' || data?.operator === '*' || data?.operator === '/';
+    
+    if (requiresMultipleNumbers && data?.number?.length < 2) {
+      setFormError('Minimum 2 numbers required for addition, multiplication, and division!');
+      setFormSuccess('');
+      return;
+    }
+    
+    if (!requiresMultipleNumbers && data?.number?.length < 1) {
+      setFormError('At least 1 number is required for square root, cube root, square, and cube operations!');
       setFormSuccess('');
       return;
     }
@@ -120,12 +129,28 @@ const EditQuestionSection: FC<EditQuestionSectionProps> = ({ question }) => {
                     label: 'Division',
                     value: '/',
                   },
+                  {
+                    label: 'Square Root',
+                    value: '√',
+                  },
+                  {
+                    label: 'Cube Root',
+                    value: '∛',
+                  },
+                  {
+                    label: 'Square',
+                    value: '²',
+                  },
+                  {
+                    label: 'Cube',
+                    value: '³',
+                  },
                 ]}
               />
               <FormInput
-                type="number"
+                type="text"
                 name="correctAnswer"
-                placeholder="Enter correct answer"
+                placeholder="Enter correct answer (e.g., 4, 3, 6.2, 8.0)"
                 label="Correct Answer *"
               />
             </div>

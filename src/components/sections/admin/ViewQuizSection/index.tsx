@@ -12,7 +12,7 @@ import QuizQuestionsTable from '@components/organisms/QuizQuestionsTable';
 import { useAuthStore } from '@store/authStore';
 import { viewQuizFormSchema } from '@validations/admin';
 import { getLevelSchemaRequest } from '@services/admin';
-import { getAllQuizQuestionsRequest } from '@services/question';
+import { getAllQuizQuestionsRequest, deleteQuestionRequest } from '@services/question';
 import {
   ClassSchema,
   GetLevelSchemaResponse,
@@ -30,6 +30,7 @@ const ViewQuizSection: FC<ViewQuizSectionProps> = () => {
 
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const [levelSchema, setLevelSchema] = useState<ClassSchema[]>();
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>();
@@ -154,6 +155,35 @@ const ViewQuizSection: FC<ViewQuizSectionProps> = () => {
     }
   };
 
+  const handleDeleteQuestion = async (questionId: number) => {
+    setDeleteLoading(true);
+    try {
+      const res = await deleteQuestionRequest(questionId, authToken!);
+      if (res.status === 200) {
+        // Remove the deleted question from the local state
+        setQuizQuestions(prev => prev?.filter(q => q.questionId !== questionId));
+        setFormError('');
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const status = error.response?.status;
+        if (status === 401 || status === 403) {
+          setFormError(
+            error.response?.data?.error ||
+              error.response?.data?.message ||
+              ERRORS.SERVER_ERROR
+          );
+        } else {
+          setFormError(ERRORS.SERVER_ERROR);
+        }
+      } else {
+        setFormError(ERRORS.SERVER_ERROR);
+      }
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   return (
     <div className="flex gap-10 px-6 py-2 justify-evenly flex-col tablet:justify-between tablet:items-center tablet:p-10 desktop:px-36">
       <div className="flex flex-col w-full gap-10">
@@ -206,7 +236,7 @@ const ViewQuizSection: FC<ViewQuizSectionProps> = () => {
       <div className="w-full">
         {quizQuestions &&
           (quizQuestions.length > 0 ? (
-            <QuizQuestionsTable questions={quizQuestions!} />
+            <QuizQuestionsTable questions={quizQuestions!} onDeleteQuestion={handleDeleteQuestion} />
           ) : (
             <div className="w-full flex items-center justify-center">
               <SuccessMessage successMessage="Quiz has no questions in it. Please add questions!" />

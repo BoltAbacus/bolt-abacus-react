@@ -33,6 +33,8 @@ export const levels = [
     points: [
       'Addition & Subtraction ( Decimals )',
       'Multiplication ( 3 Digits x 2 Digits ) & Division ( 3 Digits / 2 Digits )',
+      'Square Roots & Cube Roots',
+      'Squares & Cubes',
     ],
   },
   {

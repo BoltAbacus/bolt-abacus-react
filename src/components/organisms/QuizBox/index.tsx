@@ -7,8 +7,7 @@ import {
   useEffect,
   useRef,
 } from 'react';
-import { PiDivide } from 'react-icons/pi';
-import { RxCross1, RxPlus } from 'react-icons/rx';
+// icons no longer needed; rendering full question text instead
 
 import { QuizQuestion } from '@interfaces/apis/student';
 
@@ -33,7 +32,7 @@ const QuizBox: FC<QuizBoxProps> = ({
     const result = event.target.value.replace(/[^0-9-.]/gi, '');
     setAnswer(result);
 
-    const num = parseInt(result, 10);
+    const num = parseFloat(result);
     if (Number.isNaN(num)) setDisabled(true);
     else setDisabled(false);
   };
@@ -48,25 +47,31 @@ const QuizBox: FC<QuizBoxProps> = ({
     inputRef?.current?.focus();
   });
 
+  const buildQuestionText = (): string => {
+    const { operator, numbers } = quizQuestion.question;
+
+    if (operator === '√') return `Square root of ${numbers[0]}`;
+    if (operator === '∛') return `Cube root of ${numbers[0]}`;
+    if (operator === '²') return `Square of ${numbers[0]}`;
+    if (operator === '³') return `Cube of ${numbers[0]}`;
+
+    const formatNumber = (n: number) =>
+      Number.isInteger(n) ? `${n}` : n.toFixed(2);
+
+    const symbol = operator === '*' ? '×' : operator === '/' ? '÷' : '+';
+
+    // join all operands; covers addition with negatives and multi-row sums
+    return numbers.map(formatNumber).join(` ${symbol} `);
+  };
+
   return (
     <div className="flex justify-center items-center bg-darkBlack shadow-boxWhite p-2 py-6 rounded-2xl w-full min-h-[300px]">
       <div className="flex justify-evenly items-center gap-4 w-full overflow-auto font-bold text-lg tablet:text-xl">
         <div className="flex flex-col">
           <div className="tablet:gap-10 flex items-center gap-4">
-            <span>
-              {quizQuestion.question.operator === '*' ? (
-                <RxCross1 />
-              ) : quizQuestion.question.operator === '+' ? (
-                <RxPlus />
-              ) : (
-                <PiDivide />
-              )}
-            </span>
-            <div className="flex flex-col items-end gap-1 tracking-widest">
-              {quizQuestion.question.numbers.map((number, index) => {
-                const fullNumber = BigInt(number);
-                return <span key={index}>{fullNumber.toString()}</span>;
-              })}
+            {/* Display the full question string for better UX */}
+            <div className="text-center">
+              <span className="text-lg tablet:text-xl">{buildQuestionText()}</span>
             </div>
           </div>
         </div>

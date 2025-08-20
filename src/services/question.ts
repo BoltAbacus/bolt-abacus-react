@@ -6,6 +6,7 @@ import {
   EDIT_QUESTION_ENDPOINT,
   GET_ALL_QUIZ_QUESTIONS_ENDPOINT,
   GET_QUESTION_ENDPOINT,
+  DELETE_QUESTION_ENDPOINT,
 } from '@constants/routes';
 
 export const addQuestionsRequest = async (
@@ -90,6 +91,20 @@ export const editQuestionsRequest = async (
 export const getQuestionRequest = async (questionId: number, token: string) => {
   return axios.post(
     GET_QUESTION_ENDPOINT,
+    {
+      questionId,
+    },
+    {
+      headers: {
+        'AUTH-TOKEN': token,
+      },
+    }
+  );
+};
+
+export const deleteQuestionRequest = async (questionId: number, token: string) => {
+  return axios.post(
+    DELETE_QUESTION_ENDPOINT,
     {
       questionId,
     },

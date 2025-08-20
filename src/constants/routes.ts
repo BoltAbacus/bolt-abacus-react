@@ -97,6 +97,7 @@ export const GET_QUESTION_ENDPOINT = '/getQuestion/';
 export const ADD_QUESTION_ENDPOINT = '/addQuestion/';
 export const BULK_ADD_QUESTION_ENDPOINT = '/bulkAddQuestions/';
 export const EDIT_QUESTION_ENDPOINT = '/editQuestion/';
+export const DELETE_QUESTION_ENDPOINT = '/deleteQuestion/';
 
 export const GET_ALL_TEACHERS_ENDPOINT = '/getTeachers/';
 export const GET_ALL_TEACHERS_V2_ENDPOINT = '/getTeachersV2/';

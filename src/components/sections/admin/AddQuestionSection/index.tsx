@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { isAxiosError } from 'axios';
 import {
   FieldValues,
@@ -52,6 +52,12 @@ const AddQuestionSection: FC<AddQuestionSectionProps> = () => {
     name: 'number',
   });
 
+  // Initialize form with 2 input fields by default
+  useEffect(() => {
+    append(1);
+    append(1);
+  }, [append]);
+
   const onLevelChange = async (value: string) => {
     setLoading(true);
     try {
@@ -104,6 +110,21 @@ const AddQuestionSection: FC<AddQuestionSectionProps> = () => {
     }
   };
 
+  const onOperatorChange = (value: string) => {
+    // Clear existing numbers when operator changes
+    formMethods.setValue('number', []);
+    
+    // Set appropriate number of input fields based on operator
+    if (value === '√' || value === '∛' || value === '²' || value === '³') {
+      // Square root, cube root, square, and cube only need 1 number
+      append(1);
+    } else {
+      // Addition, multiplication, division need at least 2 numbers
+      append(1);
+      append(1);
+    }
+  };
+
   const onClassChange = (value: string) => {
     setLoading(true);
     try {
@@ -130,8 +151,17 @@ const AddQuestionSection: FC<AddQuestionSectionProps> = () => {
   };
 
   const onSubmit = async (data: FieldValues) => {
-    if (data?.number?.length < 2) {
-      setFormError('Minimum 2 numbers required!');
+    // Check if operator requires multiple numbers
+    const requiresMultipleNumbers = data?.operator === '+' || data?.operator === '*' || data?.operator === '/';
+    
+    if (requiresMultipleNumbers && data?.number?.length < 2) {
+      setFormError('Minimum 2 numbers required for addition, multiplication, and division!');
+      setFormSuccess('');
+      return;
+    }
+    
+    if (!requiresMultipleNumbers && data?.number?.length < 1) {
+      setFormError('At least 1 number is required for square root, cube root, square, and cube operations!');
       setFormSuccess('');
       return;
     }
@@ -214,6 +244,7 @@ const AddQuestionSection: FC<AddQuestionSectionProps> = () => {
                     name="operator"
                     placeholder="Choose Operator"
                     label="Operator *"
+                    onchange={onOperatorChange}
                     options={[
                       {
                         label: 'Addition',
@@ -227,12 +258,28 @@ const AddQuestionSection: FC<AddQuestionSectionProps> = () => {
                         label: 'Division',
                         value: '/',
                       },
+                      {
+                        label: 'Square Root',
+                        value: '√',
+                      },
+                      {
+                        label: 'Cube Root',
+                        value: '∛',
+                      },
+                      {
+                        label: 'Square',
+                        value: '²',
+                      },
+                      {
+                        label: 'Cube',
+                        value: '³',
+                      },
                     ]}
                   />
                   <FormInput
-                    type="number"
+                    type="text"
                     name="correctAnswer"
-                    placeholder="Enter correct answer"
+                    placeholder="Enter correct answer (e.g., 4, 3, 6.2, 8.0)"
                     label="Correct Answer *"
                   />
                 </>

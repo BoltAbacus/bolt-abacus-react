@@ -163,12 +163,10 @@ export const addQuestionSchema = z.object({
       errorMap: () => ({ message: 'Invalid Number' }),
     })
   ),
-  operator: z.enum(['+', '/', '*'], {
+  operator: z.enum(['+', '/', '*', '√', '∛', '²', '³'], {
     errorMap: () => ({ message: 'Invalid Operator' }),
   }),
-  correctAnswer: z.coerce.number({
-    errorMap: () => ({ message: 'Invalid Correct Answer' }),
-  }),
+  correctAnswer: z.string().min(1, 'Correct Answer is required'),
 });
 
 export type TAddQuestionSchema = z.infer<typeof addQuestionSchema>;
@@ -199,12 +197,10 @@ export const editQuestionSchema = z.object({
       errorMap: () => ({ message: 'Invalid Number' }),
     })
     .array(),
-  operator: z.enum(['+', '/', '*'], {
+  operator: z.enum(['+', '/', '*', '√', '∛', '²', '³'], {
     errorMap: () => ({ message: 'Invalid Operator' }),
   }),
-  correctAnswer: z.coerce.number({
-    errorMap: () => ({ message: 'Invalid Correct Answer' }),
-  }),
+  correctAnswer: z.string().min(1, 'Correct Answer is required'),
 });
 
 export type TEditQuestionSchema = z.infer<typeof editQuestionSchema>;
