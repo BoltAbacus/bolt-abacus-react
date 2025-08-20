@@ -30,7 +30,6 @@ const ViewQuizSection: FC<ViewQuizSectionProps> = () => {
 
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState('');
-  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const [levelSchema, setLevelSchema] = useState<ClassSchema[]>();
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>();
@@ -156,7 +155,6 @@ const ViewQuizSection: FC<ViewQuizSectionProps> = () => {
   };
 
   const handleDeleteQuestion = async (questionId: number) => {
-    setDeleteLoading(true);
     try {
       const res = await deleteQuestionRequest(questionId, authToken!);
       if (res.status === 200) {
@@ -179,8 +177,6 @@ const ViewQuizSection: FC<ViewQuizSectionProps> = () => {
       } else {
         setFormError(ERRORS.SERVER_ERROR);
       }
-    } finally {
-      setDeleteLoading(false);
     }
   };
 
