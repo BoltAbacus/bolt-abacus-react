@@ -66,19 +66,22 @@ const QuizBox: FC<QuizBoxProps> = ({
 
   return (
     <div className="flex justify-center items-center bg-darkBlack shadow-boxWhite p-2 py-6 rounded-2xl w-full min-h-[300px]">
-      <div className="flex justify-evenly items-center gap-4 w-full overflow-auto font-bold text-lg tablet:text-xl">
-        <div className="flex flex-col">
-          <div className="tablet:gap-10 flex items-center gap-4">
-            {/* Display the full question string for better UX */}
-            <div className="text-center">
-              <span className="text-lg tablet:text-xl">{buildQuestionText()}</span>
+      <div className="flex flex-col gap-6 w-full max-w-3xl">
+        {/* Expression area */}
+        <div className="w-full">
+          <div className="flex flex-col items-center">
+            {/* For long expressions, wrap nicely and center */}
+            <div className="text-center break-words leading-relaxed">
+              <span className="text-2xl tablet:text-3xl font-semibold">{buildQuestionText()}</span>
             </div>
           </div>
         </div>
-        <div className="text-gold text-2xl desktop:text-3xl"> = </div>
-        <div className="">
+
+        {/* Answer area */}
+        <div className="flex items-center justify-center gap-3">
+          <span className="text-gold text-2xl desktop:text-3xl">=</span>
           <input
-            className="tablet:w-32 bg-darkBlack px-4 py-3 border border-[#A0A0A0] rounded-lg outline-none w-20 text-center"
+            className="tablet:w-40 bg-darkBlack px-4 py-3 border border-[#A0A0A0] rounded-lg outline-none w-28 text-center text-xl"
             type="text"
             inputMode="decimal"
             value={answer}

@@ -15,6 +15,8 @@ export interface PracticeHeaderProps {
   minutes: number;
   seconds: number;
   showProgressBar?: boolean;
+  // Optional percentage (0-100) to show a time progress with a snail indicator
+  timeProgressPercent?: number;
 }
 
 const PracticeHeader: FC<PracticeHeaderProps> = ({
@@ -24,6 +26,7 @@ const PracticeHeader: FC<PracticeHeaderProps> = ({
   minutes,
   seconds,
   showProgressBar = true,
+  timeProgressPercent,
 }) => {
   return (
     <div className="px-1 py-4 w-full">
@@ -55,6 +58,28 @@ const PracticeHeader: FC<PracticeHeaderProps> = ({
                 type="yellow"
                 isBgBlack
               />
+              {practiceType === 'timed' && typeof timeProgressPercent === 'number' && (
+                <div className="mt-2">
+                  <div className="relative w-full">
+                    {/* Bar */}
+                    <div className="w-full h-2 bg-[#2a2a2a] rounded-full overflow-hidden">
+                      <div
+                        className="h-2 bg-gold transition-[width] duration-500 ease-out"
+                        style={{ width: `${Math.min(Math.max(timeProgressPercent, 0), 100)}%` }}
+                      />
+                    </div>
+                    {/* Snail on top of bar (not clipped) */}
+                    <div
+                      className="absolute -top-3 text-xl select-none transition-[left] duration-500 ease-out"
+                      style={{ left: `${Math.min(Math.max(timeProgressPercent, 0), 100)}%`, transform: 'translateX(-50%)' }}
+                      aria-hidden
+                    >
+                      🐌
+                    </div>
+                  </div>
+                  <div className="text-right text-xs opacity-70 mt-1">Time</div>
+                </div>
+              )}
             </div>
           )}
           <p className="flex items-center gap-1 ml-auto">

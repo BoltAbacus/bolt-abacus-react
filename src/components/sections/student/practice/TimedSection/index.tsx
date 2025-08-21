@@ -249,7 +249,8 @@ const TimedPracticeSection: FC<TimedPracticeSectionProps> = ({ operation }) => {
                 noOfQuestions={quizQuestions.length}
                 minutes={secondsToMinsSecs(totalSeconds).minutes}
                 seconds={secondsToMinsSecs(totalSeconds).seconds}
-                showProgressBar={false}
+                showProgressBar={true}
+                timeProgressPercent={((timeLimit * 60 - totalSeconds) / (timeLimit * 60)) * 100}
               />
               <div className="tablet:px-4">
                 <QuizBox
