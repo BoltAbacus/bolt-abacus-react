@@ -62,22 +62,14 @@ const PracticeHeader: FC<PracticeHeaderProps> = ({
                 <div className="mt-2">
                   <div className="relative w-full">
                     {/* Bar */}
-                    <div className="w-full h-2 bg-[#2a2a2a] rounded-full overflow-hidden">
+                    <div className="w-full h-3 bg-[#2a2a2a] rounded-full overflow-hidden">
                       <div
-                        className="h-2 bg-gold transition-[width] duration-500 ease-out"
+                        className="h-3 bg-gold transition-[width] duration-500 ease-out"
                         style={{ width: `${Math.min(Math.max(timeProgressPercent, 0), 100)}%` }}
                       />
                     </div>
-                    {/* Snail on top of bar (not clipped) */}
-                    <div
-                      className="absolute -top-3 text-xl select-none transition-[left] duration-500 ease-out"
-                      style={{ left: `${Math.min(Math.max(timeProgressPercent, 0), 100)}%`, transform: 'translateX(-50%)' }}
-                      aria-hidden
-                    >
-                      🐌
-                    </div>
                   </div>
-                  <div className="text-right text-xs opacity-70 mt-1">Time</div>
+                  <div className="text-right text-xs opacity-70 mt-1">Time Progress</div>
                 </div>
               )}
             </div>

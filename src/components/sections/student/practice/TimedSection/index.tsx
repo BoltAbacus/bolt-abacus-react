@@ -259,6 +259,7 @@ const TimedPracticeSection: FC<TimedPracticeSectionProps> = ({ operation }) => {
                   setAnswer={setCurrentAnswer}
                   setDisabled={setIsNextDisabled}
                   submitAnswer={answerQuestion}
+                  timeProgressPercent={((timeLimit * 60 - totalSeconds) / (timeLimit * 60)) * 100}
                 />
               </div>
               <div className="tablet:gap-12 flex justify-center items-center gap-4 pt-4">
