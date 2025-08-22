@@ -47,21 +47,60 @@ const QuizBox: FC<QuizBoxProps> = ({
     inputRef?.current?.focus();
   });
 
-  const buildQuestionText = (): string => {
+
+  const buildVerticalQuestion = () => {
     const { operator, numbers } = quizQuestion.question;
 
-    if (operator === '√') return `Square root of ${numbers[0]}`;
-    if (operator === '∛') return `Cube root of ${numbers[0]}`;
-    if (operator === '²') return `Square of ${numbers[0]}`;
-    if (operator === '³') return `Cube of ${numbers[0]}`;
+    // For single-operand operations
+    if (operator === '√') {
+      return (
+        <div className="text-center">
+          <div className="text-3xl tablet:text-4xl mb-2">√{numbers[0]}</div>
+        </div>
+      );
+    }
+    if (operator === '∛') {
+      return (
+        <div className="text-center">
+          <div className="text-3xl tablet:text-4xl mb-2">∛{numbers[0]}</div>
+        </div>
+      );
+    }
+    if (operator === '²') {
+      return (
+        <div className="text-center">
+          <div className="text-3xl tablet:text-4xl mb-2">{numbers[0]}²</div>
+        </div>
+      );
+    }
+    if (operator === '³') {
+      return (
+        <div className="text-center">
+          <div className="text-3xl tablet:text-4xl mb-2">{numbers[0]}³</div>
+        </div>
+      );
+    }
 
+    // For multi-operand operations, display vertically
     const formatNumber = (n: number) =>
       Number.isInteger(n) ? `${n}` : n.toFixed(2);
 
     const symbol = operator === '*' ? '×' : operator === '/' ? '÷' : '+';
 
-    // join all operands; covers addition with negatives and multi-row sums
-    return numbers.map(formatNumber).join(` ${symbol} `);
+    return (
+      <div className="text-center">
+        <div className="text-3xl tablet:text-4xl mb-2">{formatNumber(numbers[0])}</div>
+        <div className="text-2xl tablet:text-3xl mb-2">{symbol}</div>
+        <div className="text-3xl tablet:text-4xl mb-2">{formatNumber(numbers[1])}</div>
+        {numbers.length > 2 && (
+          <>
+            {numbers.slice(2).map((num, index) => (
+              <div key={index} className="text-3xl tablet:text-4xl mb-2">{formatNumber(num)}</div>
+            ))}
+          </>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -70,10 +109,8 @@ const QuizBox: FC<QuizBoxProps> = ({
         {/* Expression area */}
         <div className="w-full">
           <div className="flex flex-col items-center">
-            {/* For long expressions, wrap nicely and center */}
-            <div className="text-center break-words leading-relaxed">
-              <span className="text-2xl tablet:text-3xl font-semibold">{buildQuestionText()}</span>
-            </div>
+            {/* Vertical question display */}
+            {buildVerticalQuestion()}
           </div>
         </div>
 
