@@ -91,26 +91,22 @@ const QuizBox: FC<QuizBoxProps> = ({
       <div className="flex items-center justify-center gap-8">
         {/* Left side - Vertical numbers */}
         <div className="text-right">
-          <div className="text-lg tablet:text-xl mb-1">{formatNumber(numbers[0])}</div>
-          <div className="text-base tablet:text-lg mb-1">{symbol}</div>
-          <div className="text-lg tablet:text-xl mb-1">{formatNumber(numbers[1])}</div>
-          {numbers.length > 2 && (
-            <>
-              {numbers.slice(2).map((num, index) => (
-                <div key={index}>
-                  <div className="text-base tablet:text-lg mb-1">{symbol}</div>
-                  <div className="text-lg tablet:text-xl mb-1">{formatNumber(num)}</div>
-                </div>
-              ))}
-            </>
-          )}
+          <div className="text-base tablet:text-lg mb-1">{formatNumber(numbers[0])}</div>
+          {numbers.slice(1).map((num, index) => (
+            <div key={index} className="text-base tablet:text-lg mb-1">{formatNumber(num)}</div>
+          ))}
+        </div>
+        
+        {/* Middle - Operator */}
+        <div className="flex items-center">
+          <span className="text-gold text-lg tablet:text-xl">{symbol}</span>
         </div>
         
         {/* Right side - Equals and answer */}
         <div className="flex items-center gap-3">
-          <span className="text-gold text-xl tablet:text-2xl">=</span>
+          <span className="text-gold text-lg tablet:text-xl">=</span>
           <input
-            className="tablet:w-32 bg-darkBlack px-3 py-2 border border-[#A0A0A0] rounded-lg outline-none w-24 text-center text-lg"
+            className="tablet:w-28 bg-darkBlack px-3 py-2 border border-[#A0A0A0] rounded-lg outline-none w-20 text-center text-base"
             type="text"
             inputMode="decimal"
             value={answer}
