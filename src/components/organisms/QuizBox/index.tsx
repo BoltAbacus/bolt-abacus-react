@@ -54,29 +54,85 @@ const QuizBox: FC<QuizBoxProps> = ({
     // For single-operand operations
     if (operator === '√') {
       return (
-        <div className="text-center">
-          <div className="text-2xl tablet:text-3xl mb-2">√{numbers[0]}</div>
+        <div className="flex items-center justify-center gap-8">
+          <div className="text-center">
+            <div className="text-2xl tablet:text-3xl mb-2">√{numbers[0]}</div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-gold text-lg tablet:text-xl">=</span>
+            <input
+              className="tablet:w-28 bg-darkBlack px-3 py-2 border border-[#A0A0A0] rounded-lg outline-none w-20 text-center text-base"
+              type="text"
+              inputMode="decimal"
+              value={answer}
+              ref={inputRef}
+              onChange={(e) => handleChange(e)}
+              onKeyDown={(e) => handleEnter(e)}
+            />
+          </div>
         </div>
       );
     }
     if (operator === '∛') {
       return (
-        <div className="text-center">
-          <div className="text-2xl tablet:text-3xl mb-2">∛{numbers[0]}</div>
+        <div className="flex items-center justify-center gap-8">
+          <div className="text-center">
+            <div className="text-2xl tablet:text-3xl mb-2">∛{numbers[0]}</div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-gold text-lg tablet:text-xl">=</span>
+            <input
+              className="tablet:w-28 bg-darkBlack px-3 py-2 border border-[#A0A0A0] rounded-lg outline-none w-20 text-center text-base"
+              type="text"
+              inputMode="decimal"
+              value={answer}
+              ref={inputRef}
+              onChange={(e) => handleChange(e)}
+              onKeyDown={(e) => handleEnter(e)}
+            />
+          </div>
         </div>
       );
     }
     if (operator === '²') {
       return (
-        <div className="text-center">
-          <div className="text-2xl tablet:text-3xl mb-2">{numbers[0]}²</div>
+        <div className="flex items-center justify-center gap-8">
+          <div className="text-center">
+            <div className="text-2xl tablet:text-3xl mb-2">{numbers[0]}²</div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-gold text-lg tablet:text-xl">=</span>
+            <input
+              className="tablet:w-28 bg-darkBlack px-3 py-2 border border-[#A0A0A0] rounded-lg outline-none w-20 text-center text-base"
+              type="text"
+              inputMode="decimal"
+              value={answer}
+              ref={inputRef}
+              onChange={(e) => handleChange(e)}
+              onKeyDown={(e) => handleEnter(e)}
+            />
+          </div>
         </div>
       );
     }
     if (operator === '³') {
       return (
-        <div className="text-center">
-          <div className="text-2xl tablet:text-3xl mb-2">{numbers[0]}³</div>
+        <div className="flex items-center justify-center gap-8">
+          <div className="text-center">
+            <div className="text-2xl tablet:text-3xl mb-2">{numbers[0]}³</div>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-gold text-lg tablet:text-xl">=</span>
+            <input
+              className="tablet:w-28 bg-darkBlack px-3 py-2 border border-[#A0A0A0] rounded-lg outline-none w-20 text-center text-base"
+              type="text"
+              inputMode="decimal"
+              value={answer}
+              ref={inputRef}
+              onChange={(e) => handleChange(e)}
+              onKeyDown={(e) => handleEnter(e)}
+            />
+          </div>
         </div>
       );
     }
@@ -85,7 +141,7 @@ const QuizBox: FC<QuizBoxProps> = ({
     const formatNumber = (n: number) =>
       Number.isInteger(n) ? `${n}` : n.toFixed(2);
 
-    const symbol = operator === '*' ? '×' : operator === '/' ? '÷' : '+';
+    const symbol = operator === '*' ? '×' : operator === '/' ? '÷' : operator === '+' ? '+' : operator === '-' ? '-' : operator;
 
     return (
       <div className="flex items-center justify-center gap-8">
