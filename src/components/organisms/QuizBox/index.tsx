@@ -55,28 +55,28 @@ const QuizBox: FC<QuizBoxProps> = ({
     if (operator === '√') {
       return (
         <div className="text-center">
-          <div className="text-3xl tablet:text-4xl mb-2">√{numbers[0]}</div>
+          <div className="text-2xl tablet:text-3xl mb-2">√{numbers[0]}</div>
         </div>
       );
     }
     if (operator === '∛') {
       return (
         <div className="text-center">
-          <div className="text-3xl tablet:text-4xl mb-2">∛{numbers[0]}</div>
+          <div className="text-2xl tablet:text-3xl mb-2">∛{numbers[0]}</div>
         </div>
       );
     }
     if (operator === '²') {
       return (
         <div className="text-center">
-          <div className="text-3xl tablet:text-4xl mb-2">{numbers[0]}²</div>
+          <div className="text-2xl tablet:text-3xl mb-2">{numbers[0]}²</div>
         </div>
       );
     }
     if (operator === '³') {
       return (
         <div className="text-center">
-          <div className="text-3xl tablet:text-4xl mb-2">{numbers[0]}³</div>
+          <div className="text-2xl tablet:text-3xl mb-2">{numbers[0]}³</div>
         </div>
       );
     }
@@ -88,37 +88,29 @@ const QuizBox: FC<QuizBoxProps> = ({
     const symbol = operator === '*' ? '×' : operator === '/' ? '÷' : '+';
 
     return (
-      <div className="text-center">
-        <div className="text-3xl tablet:text-4xl mb-2">{formatNumber(numbers[0])}</div>
-        <div className="text-2xl tablet:text-3xl mb-2">{symbol}</div>
-        <div className="text-3xl tablet:text-4xl mb-2">{formatNumber(numbers[1])}</div>
-        {numbers.length > 2 && (
-          <>
-            {numbers.slice(2).map((num, index) => (
-              <div key={index} className="text-3xl tablet:text-4xl mb-2">{formatNumber(num)}</div>
-            ))}
-          </>
-        )}
-      </div>
-    );
-  };
-
-  return (
-    <div className="flex justify-center items-center bg-darkBlack shadow-boxWhite p-2 py-6 rounded-2xl w-full min-h-[300px]">
-      <div className="flex flex-col gap-6 w-full max-w-3xl">
-        {/* Expression area */}
-        <div className="w-full">
-          <div className="flex flex-col items-center">
-            {/* Vertical question display */}
-            {buildVerticalQuestion()}
-          </div>
+      <div className="flex items-center justify-center gap-8">
+        {/* Left side - Vertical numbers */}
+        <div className="text-right">
+          <div className="text-lg tablet:text-xl mb-1">{formatNumber(numbers[0])}</div>
+          <div className="text-base tablet:text-lg mb-1">{symbol}</div>
+          <div className="text-lg tablet:text-xl mb-1">{formatNumber(numbers[1])}</div>
+          {numbers.length > 2 && (
+            <>
+              {numbers.slice(2).map((num, index) => (
+                <div key={index}>
+                  <div className="text-base tablet:text-lg mb-1">{symbol}</div>
+                  <div className="text-lg tablet:text-xl mb-1">{formatNumber(num)}</div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
-
-        {/* Answer area */}
-        <div className="flex items-center justify-center gap-3">
-          <span className="text-gold text-2xl desktop:text-3xl">=</span>
+        
+        {/* Right side - Equals and answer */}
+        <div className="flex items-center gap-3">
+          <span className="text-gold text-xl tablet:text-2xl">=</span>
           <input
-            className="tablet:w-40 bg-darkBlack px-4 py-3 border border-[#A0A0A0] rounded-lg outline-none w-28 text-center text-xl"
+            className="tablet:w-32 bg-darkBlack px-3 py-2 border border-[#A0A0A0] rounded-lg outline-none w-24 text-center text-lg"
             type="text"
             inputMode="decimal"
             value={answer}
@@ -127,6 +119,15 @@ const QuizBox: FC<QuizBoxProps> = ({
             onKeyDown={(e) => handleEnter(e)}
           />
         </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="flex justify-center items-center bg-darkBlack shadow-boxWhite p-2 py-6 rounded-2xl w-full min-h-[300px]">
+      <div className="w-full max-w-4xl">
+        {/* Vertical question display */}
+        {buildVerticalQuestion()}
       </div>
     </div>
   );
