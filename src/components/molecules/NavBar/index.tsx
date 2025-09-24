@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 
 import BrandLogo from '@components/atoms/BrandLogo';
-import Button from '@components/atoms/Button';
 import NavBarLink from '@components/atoms/NavBarLink';
 import ProfileIcon from '@components/atoms/ProfileIcon';
 

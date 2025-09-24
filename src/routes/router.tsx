@@ -10,7 +10,6 @@ import TeacherLayout from '@layouts/TeacherLayout';
 import HomePage from '@pages/home';
 import Custom404Page from '@pages/not-found';
 import ProfilePage from '@pages/profile';
-import LoginPage from '@pages/login';
 import ResetPasswordPage from '@pages/reset-password';
 import ResetPasswordPageV2 from '@pages/reset-password-v2';
 import ForgotPasswordPage from '@pages/forgot-password';
