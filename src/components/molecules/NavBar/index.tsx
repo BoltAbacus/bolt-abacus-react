@@ -70,13 +70,7 @@ const NavBar: FC<NavBarProps> = () => {
                   />
                 </NavBarLink>
               </>
-            ) : (
-              <NavBarLink type="desktop" href={LOGIN_PAGE}>
-                <div className="w-[120px] desktop:w-[187px]">
-                  <Button type="active" text="Sign In" />
-                </div>
-              </NavBarLink>
-            )}
+            ) : null}
           </ul>
         </div>
         <button
@@ -137,17 +131,7 @@ const NavBar: FC<NavBarProps> = () => {
                     />
                   </NavBarLink>
                 </>
-              ) : (
-                <NavBarLink
-                  type="mobile"
-                  href={LOGIN_PAGE}
-                  onclick={handleMenuClick}
-                >
-                  <div className="w-[120px] desktop:w-[187px]">
-                    <Button type="active" text="Sign In" />
-                  </div>
-                </NavBarLink>
-              )}
+              ) : null}
             </ul>
           </div>
         </div>
